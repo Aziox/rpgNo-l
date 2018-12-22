@@ -1,0 +1,7 @@
+C:\Users\Damien\source\repos\tpNoel\tpNoel\bin\Debug\tpNoel.exe.config
+C:\Users\Damien\source\repos\tpNoel\tpNoel\bin\Debug\tpNoel.exe
+C:\Users\Damien\source\repos\tpNoel\tpNoel\bin\Debug\tpNoel.pdb
+C:\Users\Damien\source\repos\tpNoel\tpNoel\obj\Debug\tpNoel.csprojAssemblyReference.cache
+C:\Users\Damien\source\repos\tpNoel\tpNoel\obj\Debug\tpNoel.csproj.CoreCompileInputs.cache
+C:\Users\Damien\source\repos\tpNoel\tpNoel\obj\Debug\tpNoel.exe
+C:\Users\Damien\source\repos\tpNoel\tpNoel\obj\Debug\tpNoel.pdb
