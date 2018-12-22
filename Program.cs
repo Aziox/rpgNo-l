@@ -60,6 +60,8 @@ namespace tpNoel
             string gender = "";
             string duelAction = "Action disponible : Attaquer(lettre \"a\") se soigner(lettre \"h\") se reposer(lettre \"d\")";
             string actionOn = "";
+            string rank = "";
+            string action = "";
             //déclaration du tableau contenant toute les armes disponibles (probablement changer dans le futur par une class weapon 
             string[,] weapon = new string[,]
             {
@@ -73,7 +75,7 @@ namespace tpNoel
                 Console.SetCursorPosition(0, 1);
                 Console.WriteLine("Information sur votre personnage");
                 Console.SetCursorPosition(3, 3);
-                Console.WriteLine(username);
+                Console.WriteLine("[" + rank + "]" + username);
                 Console.SetCursorPosition(1, 4);
                 Console.WriteLine("Vie : " + health);
                 Console.SetCursorPosition(1, 5);
@@ -299,6 +301,7 @@ namespace tpNoel
 
                             if (Console.ReadLine() == "oui")
                             {
+                                rank = "Novice";
                                 startBattle = true;
                             }
                         }
@@ -312,8 +315,170 @@ namespace tpNoel
                     }
                 }
                 Console.Clear();
-                showProfil();
                 localisation = "village";
+                bool end = false;
+                while (!end)
+                {
+                    if (action == "help" && localisation != "donjon" && localisation != "help")
+                    {
+                        localisation = "help";
+                    } 
+                    else
+                    {
+                        Console.WriteLine("Action impossible!");
+                    }
+                    if(action == "goTown" && localisation != "donjon" && localisation != "village")
+                    {
+                        localisation = "village";
+                    }
+                    else
+                    {
+                        Console.WriteLine("Action impossible!");
+                    }
+                    switch (localisation)
+                    {
+                        case "village":
+                            {
+                                Console.Clear();
+                                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                                Console.SetCursorPosition(50, 0);
+                                Console.WriteLine("Vous êtes actuellement dans le village");
+                                Console.ResetColor();
+                                showProfil();
+                                //zone de texte pour se téléporter 
+                                Console.Write("votre action : ");
+                                action = Console.ReadLine();
+                                break;
+                            }
+                        case "guilde":
+                            {
+                                Console.Clear();
+                                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                                Console.SetCursorPosition(50, 0);
+                                Console.WriteLine("Vous êtes actuellement à la guilde");
+                                Console.ResetColor();
+                                //zone de texte pour se téléporter 
+                                Console.Write("votre action : ");
+                                action = Console.ReadLine();
+                                break;
+                            }
+                        case "shop":
+                            {
+                                Console.Clear();
+                                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                                Console.SetCursorPosition(50, 0);
+                                Console.WriteLine("Bienvenue chez le Marchand");
+                                Console.ResetColor();
+                                //zone de texte pour se téléporter 
+                                Console.Write("votre action : ");
+                                action = Console.ReadLine();
+                                break;
+                            }
+                        case "donjon":
+                            {
+                                Console.Clear();
+                                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                                Console.SetCursorPosition(50, 0);
+                                Console.WriteLine("entrer du donjon");
+                                Console.ResetColor();
+                                //zone de texte pour se téléporter 
+                                Console.Write("votre action : ");
+                                action = Console.ReadLine();
+                                break;
+                            }
+                        case "auberge":
+                            {
+                                Console.Clear();
+                                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                                Console.SetCursorPosition(50, 0);
+                                Console.WriteLine("Bienvenue à l'auberge");
+                                Console.ResetColor();
+                                //zone de texte pour se téléporter 
+                                Console.Write("votre action : ");
+                                action = Console.ReadLine();
+                                break;
+                            }
+                        case "help":
+                            {
+                                Console.Clear();
+                                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                                Console.SetCursorPosition(50, 0);
+                                Console.WriteLine("COMMANDE DISPONIBLE");
+                                Console.ResetColor();
+                                //commande disponible dans le village
+                                Console.ForegroundColor = ConsoleColor.Blue;
+                                Console.WriteLine("commande disponible dans le village \n\r");
+                                Console.ResetColor();
+                                //commande go quest
+                                Console.Write("goQuest ");
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.WriteLine(" --Permet de se téléporter a la guilde \n\r");
+                                Console.ResetColor();
+                                //commande go shop
+                                Console.Write("goShop ");
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.WriteLine(" --Permet de se téléporter au magasin \n\r");
+                                Console.ResetColor();
+                                //commande go dj
+                                Console.Write("goDj ");
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.WriteLine(" --Permet de se téléporter au donjon \n\r");
+                                Console.ResetColor();
+                                // commande go sleep
+                                Console.Write("goSleep ");
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.WriteLine(" --Permet de se téléporter a l'auberge \n\r");
+                                Console.ResetColor();
+                                //commande disponible dans le shop
+                                Console.ForegroundColor = ConsoleColor.Blue;
+                                Console.WriteLine("commande disponible dans le shop \n\r");
+                                Console.ResetColor();
+                                //commande buy 
+                                Console.Write("buy_[id de l'objet] ");
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.WriteLine(" --Permet d'acheter l'objet sélectionner contre de l'argent \n\r");
+                                Console.ResetColor();
+                                //d'autre commande vont peut être apparaitre avec le temps ^^ 
+                                //commande disponible dans l'auberge
+                                Console.ForegroundColor = ConsoleColor.Blue;
+                                Console.WriteLine("commande disponible dans l'auberge \n\r");
+                                Console.ResetColor();
+                                //commande restor
+                                Console.Write("restor");
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.WriteLine(" --Permet restaurer l'entiéreter de votre et vie et de votre endurance \n\r");
+                                Console.ResetColor();
+                                //d'autre commande vont peut être apparaitre avec le temps ^^ 
+                                //commande disponible dans l'auberge
+                                Console.ForegroundColor = ConsoleColor.Blue;
+                                Console.WriteLine("commande disponible dans le donjon \n\r");
+                                Console.ResetColor();
+                                //commande dongeon
+                                Console.Write("dungeon [nom du donjon]");
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.WriteLine(" --Permet de rentrer dans un donjon . ATTENTION LES DONJONS SE DEBLOQUE AVEC LES NIVEAUX \n\r");
+                                Console.ResetColor();
+                                //commande universelle
+                                Console.ForegroundColor = ConsoleColor.Blue;
+                                Console.WriteLine("commande disponible partout ou presque \n\r");
+                                Console.ResetColor();
+                                //go town
+                                Console.Write("goTown");
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.WriteLine(" --Permet de se téléporter au village \n\r");
+                                Console.ResetColor();
+                                //help
+                                Console.Write("help");
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.WriteLine(" --Permet d'aller dans le menu help \n\r");
+                                Console.ResetColor();
+                                //pour sortir de la
+                                Console.Write("votre action (goTown) : ");
+                                action = Console.ReadLine();
+                                break;
+                            }
+                    }
+                }
             }
         }
     }
