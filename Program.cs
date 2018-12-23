@@ -151,7 +151,7 @@ namespace tpNoel
             //déclaration de la function cmdU
             void cmdU()
             {
-                if (action == "help" && localisation != "donjon" && localisation != "help")
+                if (action == "help" && localisation != "help")
                 {
                     localisation = "help";
                 }
@@ -159,13 +159,43 @@ namespace tpNoel
                 {
                     Console.WriteLine("Action impossible!");
                 }
-                if (action == "goTown" && localisation != "donjon" && localisation != "village")
+                if (action == "goTown" && localisation != "village")
                 {
                     localisation = "village";
                 }
                 else
                 {
                     Console.WriteLine("Action impossible!");
+                }
+            }
+            //déclaration de la function cmdTown
+            void cmdTown()
+            {
+                if (localisation == "village")
+                {
+                    switch (action)
+                    {
+                        case "goQuest":
+                            {
+                                localisation = "guilde";
+                                break;
+                            }
+                        case "goShop":
+                            {
+                                localisation = "shop";
+                                break;
+                            }
+                        case "goDj":
+                            {
+                                localisation = "donjon";
+                                break;
+                            }
+                        case "goSleep":
+                            {
+                                localisation = "auberge";
+                                break;
+                            }
+                    }
                 }
             }
             //----------[CREATION PERSONNAGE]----------
@@ -405,6 +435,7 @@ namespace tpNoel
                     {
                         case "village":
                             {
+                                cmdTown();
                                 Console.Clear();
                                 Console.ForegroundColor = ConsoleColor.DarkYellow;
                                 Console.SetCursorPosition(50, 0);
