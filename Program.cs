@@ -39,8 +39,13 @@ namespace tpNoel
     {
         static void Main(string[] args)
         {
+
+            //----------[CLASS]----------
+
             //instanciation de la class mob je le fais tout en haut pour éviter tout problèmes 
             mob mobs = new mob();
+
+            //----------[VARIABLE]----------
 
             //Déclaration des variables pour le début de la partie 
             bool userInfoStarting = false;
@@ -60,8 +65,11 @@ namespace tpNoel
             string gender = "";
             string duelAction = "Action disponible : Attaquer(lettre \"a\") se soigner(lettre \"h\") se reposer(lettre \"d\")";
             string actionOn = "";
-            string rank = "";
+            int rank = 0;
             string action = "";
+
+            //----------[TABLEAU]----------
+
             //déclaration du tableau contenant toute les armes disponibles (probablement changer dans le futur par une class weapon 
             string[,] weapon = new string[,]
             {
@@ -69,13 +77,21 @@ namespace tpNoel
                 {"poing","0","0"},//arme de base quand on arrive dans le jeu
                 {"épée en plastique","4","10" }//arme obtenue aprés le combat tuto
             };
+            //tableau rank qu'on utilise a la place de la variable car grace au tableau nous allons pouvoir faire des comparaison entre le rank actuelle et un rank ultérieur (achat disponible a partir de , quete disponible a partir de ....)
+            string[] ranks = new string[] { "TUTO", "villageois", "Aventurier", "Gardien", "père noël" };
+            //----------[FONCTION]----------
+
+            //ajout du param indexRank pour l'affichage du rank
             //déclaration de la fonction showProfil qu'on réutilisera pour tout les cbt etc ...
-            void showProfil() //déclaration de la fonction showProfil qu'on réutilisera pour tout les cbt etc ...
+            void showProfil(int indexRank) //déclaration de la fonction showProfil qu'on réutilisera pour tout les cbt etc ...
             {
                 Console.SetCursorPosition(0, 1);
                 Console.WriteLine("Information sur votre personnage");
-                Console.SetCursorPosition(3, 3);
-                Console.WriteLine("[" + rank + "]" + username);
+                Console.SetCursorPosition(1, 3);
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Write("[" + ranks[indexRank] + "]");
+                Console.ResetColor();
+                Console.WriteLine(username);
                 Console.SetCursorPosition(1, 4);
                 Console.WriteLine("Vie : " + health);
                 Console.SetCursorPosition(1, 5);
@@ -93,7 +109,7 @@ namespace tpNoel
 
                 Console.SetCursorPosition(76, 1);
                 Console.WriteLine("Information sur votre ennemie");
-                Console.SetCursorPosition(79, 3);
+                Console.SetCursorPosition(77, 3);
                 Console.WriteLine(mobs.name);//nom du mob
                 Console.SetCursorPosition(77, 4);
                 Console.WriteLine("Vie : " + mobs.mobHealth); //vie du mob
@@ -106,6 +122,54 @@ namespace tpNoel
                 Console.SetCursorPosition(77, 8);
                 Console.WriteLine("attaque principal : " + mobs.mobAction); //attaque de base du monstre 
             }
+            //déclaration de la fonction pour le level up
+            void levelUp()
+            {
+                if (xp >= 100)
+                {
+                    level++;
+                    if (level == 5)
+                    {
+                        maxHealth = maxHealth + 15;
+                        power = power + 5;
+                        health = maxHealth;
+                    }
+                    else if (level == 10)
+                    {
+                        maxHealth = maxHealth + 25;
+                        power = power + 10;
+                        health = maxHealth;
+                    }
+                    else
+                    {
+                        maxHealth = maxHealth + 7;
+                        power = power + 1;
+                        health = maxHealth;
+                    }
+                }
+            }
+            //déclaration de la function cmdU
+            void cmdU()
+            {
+                if (action == "help" && localisation != "donjon" && localisation != "help")
+                {
+                    localisation = "help";
+                }
+                else
+                {
+                    Console.WriteLine("Action impossible!");
+                }
+                if (action == "goTown" && localisation != "donjon" && localisation != "village")
+                {
+                    localisation = "village";
+                }
+                else
+                {
+                    Console.WriteLine("Action impossible!");
+                }
+            }
+            //----------[CREATION PERSONNAGE]----------
+
             //partie visible au lancement du jeu
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Bienvenue dans le idle RPG noëlWorld");
@@ -144,6 +208,8 @@ namespace tpNoel
                 }
             };
 
+            //----------[START]----------
+
             Console.SetCursorPosition(40, 1);
             Console.WriteLine("Bienvenue dans le monde noël");
             Console.SetCursorPosition(1, 3);
@@ -166,11 +232,16 @@ namespace tpNoel
                     Console.Write("Vous n'avez pas du bien comprendre ^^ ");
                 }
             }
+
+            //----------[COMBAT TUTO]----------
+
             mobs.PNS();
-            showProfil();
+            showProfil(rank);
             showMob();
             Console.WriteLine(" \n\r Le combat est sur le point de commencer ");
             Console.WriteLine("dans un combat vous avez plusieurs action possible elles sont listé si dessous. \n\r Dans ce combat on va commencer par attaquer");
+
+            //----------[COMBAT TUTO (attaque) ]----------
 
             startBattle = false;
             while (!startBattle)
@@ -184,7 +255,7 @@ namespace tpNoel
                     Console.Clear();
                     mobs.mobHealth = mobs.mobHealth - realPower;
                     stamina = stamina - 90;
-                    showProfil();
+                    showProfil(rank);
                     showMob();
                     if (gender == "femme")
                     {
@@ -208,6 +279,9 @@ namespace tpNoel
                     Console.WriteLine("\n\r Dans un combat vous perdez de l'endurance quand vous attaquez et quand vous vous soignez");
                 }
             }
+
+            //----------[COMBAT TUTO (se reposer) ]----------
+
             startBattle = false;
             while (!startBattle)
             {
@@ -220,7 +294,7 @@ namespace tpNoel
                     Console.Clear();
                     health = health - mobs.mobPower;
                     stamina = 100;
-                    showProfil();
+                    showProfil(rank);
                     showMob();
                     if (gender == "femme")
                     {
@@ -258,6 +332,9 @@ namespace tpNoel
 
                 }
                 Console.WriteLine("\n\r Aie il ne vous reste plus que 1 points de vue une mouche pourrais vous tuer ");
+
+                //----------[COMBAT TUTO (HEAL) ]----------
+
                 startBattle = false;
                 while (!startBattle)
                 {
@@ -275,7 +352,7 @@ namespace tpNoel
                         {
                             health = maxHealth;//si la vie dépasse alors on donne juste la valeur maximum a health pour éviter d'avoir une vie supérieur a la vie max
                         }
-                        showProfil();
+                        showProfil(rank);
                         showMob();
                         Console.WriteLine("Vous vous êtes soigner et le " + mobs.name + "en a eu sa claque il est partie Vous avez gagner le combat");
                         Console.WriteLine("Vous avez gagner " + mobs.giveXp + "xp et  " + mobs.givePo + "PO!!");
@@ -301,7 +378,7 @@ namespace tpNoel
 
                             if (Console.ReadLine() == "oui")
                             {
-                                rank = "Novice";
+                                rank++;
                                 startBattle = true;
                             }
                         }
@@ -314,27 +391,16 @@ namespace tpNoel
                         Console.ResetColor();
                     }
                 }
+
+                //----------[ARRIVE AU VILLAGE]----------
+
                 Console.Clear();
                 localisation = "village";
                 bool end = false;
                 while (!end)
                 {
-                    if (action == "help" && localisation != "donjon" && localisation != "help")
-                    {
-                        localisation = "help";
-                    } 
-                    else
-                    {
-                        Console.WriteLine("Action impossible!");
-                    }
-                    if(action == "goTown" && localisation != "donjon" && localisation != "village")
-                    {
-                        localisation = "village";
-                    }
-                    else
-                    {
-                        Console.WriteLine("Action impossible!");
-                    }
+                    levelUp();
+                    cmdU();
                     switch (localisation)
                     {
                         case "village":
@@ -344,7 +410,7 @@ namespace tpNoel
                                 Console.SetCursorPosition(50, 0);
                                 Console.WriteLine("Vous êtes actuellement dans le village");
                                 Console.ResetColor();
-                                showProfil();
+                                showProfil(rank);
                                 //zone de texte pour se téléporter 
                                 Console.Write("votre action : ");
                                 action = Console.ReadLine();
